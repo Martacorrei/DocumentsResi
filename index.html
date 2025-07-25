@@ -151,18 +151,6 @@
             box-shadow: 0 0 0 3px rgba(33, 37, 41, 0.1);
         }
        
-        .input-error {
-            border-color: #dc3545 !important;
-            background-color: #f8d7da !important;
-        }
-       
-        .error-message {
-            color: #dc3545;
-            font-size: 12px;
-            margin-top: 5px;
-            display: none;
-        }
-       
         .submit-btn {
             background: linear-gradient(135deg, #212529, #343a40);
             color: white;
@@ -183,17 +171,10 @@
             box-shadow: 0 8px 25px rgba(33, 37, 41, 0.3);
         }
        
-        .submit-btn:disabled {
-            background: #6c757d;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-       
         .success-message {
-            background-color: #d1ecf1;
-            border: 1px solid #bee5eb;
-            color: #0c5460;
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
             padding: 15px;
             border-radius: 8px;
             margin-bottom: 20px;
@@ -202,24 +183,6 @@
         
         .success-message.show {
             display: block;
-            background-color: #d4edda;
-            border-color: #c3e6cb;
-            color: #155724;
-        }
-       
-        .loading {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(255,255,255,.3);
-            border-radius: 50%;
-            border-top-color: #fff;
-            animation: spin 1s ease-in-out infinite;
-            margin-right: 10px;
-        }
-       
-        @keyframes spin {
-            to { transform: rotate(360deg); }
         }
        
         .privacy-note {
@@ -271,9 +234,8 @@
                 ✓ Formulário enviado com sucesso! Entraremos em contacto em breve.
             </div>
            
-            <form name="checkin" method="POST" data-netlify="true" id="checkinForm">
+            <form name="checkin" method="POST" data-netlify="true" action="/obrigado.html">
                 <input type="hidden" name="form-name" value="checkin">
-                <input type="hidden" name="numero-hospedes" value="1" id="guestCountField">
 
                 <!-- Guest Number Selection -->
                 <div class="guest-selector">
@@ -283,6 +245,9 @@
                         <button type="button" class="guest-btn" onclick="selectGuests(2)">2 Hóspedes</button>
                     </div>
                 </div>
+
+                <!-- Hidden field to track number of guests -->
+                <input type="hidden" name="numero-hospedes" value="1" id="guestCountField">
                
                 <!-- Reserva Information -->
                 <div class="guest-section">
@@ -290,30 +255,26 @@
                     <div class="form-group">
                         <label for="data" class="required">Data de Chegada</label>
                         <input type="date" id="data" name="data-chegada" required>
-                        <div class="error-message" id="dataError">Por favor, selecione uma data válida</div>
                     </div>
                 </div>
                
                 <!-- Guest 1 Information -->
-                <div class="guest-section" id="guest1Section">
+                <div class="guest-section">
                     <h4>Hóspede Principal</h4>
                    
                     <div class="form-group">
                         <label for="nome1" class="required">Nome Completo</label>
                         <input type="text" id="nome1" name="hospede1-nome" required>
-                        <div class="error-message" id="nome1Error">Por favor, insira o nome completo</div>
                     </div>
                    
                     <div class="form-group">
                         <label for="email1" class="required">E-mail</label>
                         <input type="email" id="email1" name="hospede1-email" required>
-                        <div class="error-message" id="email1Error">Por favor, insira um e-mail válido</div>
                     </div>
                    
                     <div class="form-group">
                         <label for="documento1" class="required">Número do Cartão de Cidadão / Documento</label>
                         <input type="text" id="documento1" name="hospede1-documento" required placeholder="Ex: 12345678 9 ZZ0">
-                        <div class="error-message" id="documento1Error">Por favor, insira o número do documento</div>
                     </div>
                    
                     <div class="form-group">
@@ -330,13 +291,11 @@
                             <option value="Americana">Americana</option>
                             <option value="Outra">Outra</option>
                         </select>
-                        <div class="error-message" id="nacionalidade1Error">Por favor, selecione a nacionalidade</div>
                     </div>
                    
                     <div class="form-group">
                         <label for="telefone1" class="required">Telefone</label>
                         <input type="tel" id="telefone1" name="hospede1-telefone" required placeholder="+351 xxx xxx xxx">
-                        <div class="error-message" id="telefone1Error">Por favor, insira um número de telefone válido</div>
                     </div>
                 </div>
                
@@ -347,19 +306,16 @@
                     <div class="form-group">
                         <label for="nome2" class="required">Nome Completo</label>
                         <input type="text" id="nome2" name="hospede2-nome">
-                        <div class="error-message" id="nome2Error">Por favor, insira o nome completo</div>
                     </div>
                    
                     <div class="form-group">
-                        <label for="email2">E-mail</label>
+                        <label for="email2">E-mail (opcional)</label>
                         <input type="email" id="email2" name="hospede2-email">
-                        <div class="error-message" id="email2Error">Por favor, insira um e-mail válido</div>
                     </div>
                    
                     <div class="form-group">
                         <label for="documento2" class="required">Número do Cartão de Cidadão / Documento</label>
                         <input type="text" id="documento2" name="hospede2-documento" placeholder="Ex: 12345678 9 ZZ0">
-                        <div class="error-message" id="documento2Error">Por favor, insira o número do documento</div>
                     </div>
                    
                     <div class="form-group">
@@ -376,17 +332,15 @@
                             <option value="Americana">Americana</option>
                             <option value="Outra">Outra</option>
                         </select>
-                        <div class="error-message" id="nacionalidade2Error">Por favor, selecione a nacionalidade</div>
                     </div>
                    
                     <div class="form-group">
-                        <label for="telefone2">Telefone</label>
+                        <label for="telefone2">Telefone (opcional)</label>
                         <input type="tel" id="telefone2" name="hospede2-telefone" placeholder="+351 xxx xxx xxx">
-                        <div class="error-message" id="telefone2Error">Por favor, insira um número de telefone válido</div>
                     </div>
                 </div>
                
-                <button type="submit" class="submit-btn" id="submitBtn">
+                <button type="submit" class="submit-btn">
                     Enviar Informações
                 </button>
                
@@ -398,15 +352,11 @@
     </div>
 
     <script>
-        let currentGuestCount = 1;
-       
         // Set minimum date to today
         document.getElementById('data').min = new Date().toISOString().split('T')[0];
        
         function selectGuests(count) {
-            currentGuestCount = count;
-            
-            // Update hidden field with guest count
+            // Update hidden field
             document.getElementById('guestCountField').value = count;
            
             // Update button states
@@ -417,148 +367,40 @@
            
             // Show/hide guest 2 section
             const guest2Section = document.getElementById('guest2Section');
+            const guest2Fields = ['nome2', 'documento2', 'nacionalidade2'];
+            
             if (count === 2) {
                 guest2Section.classList.remove('hidden');
-                // Make guest 2 fields required (except email and phone)
-                document.getElementById('nome2').required = true;
-                document.getElementById('documento2').required = true;
-                document.getElementById('nacionalidade2').required = true;
+                // Make guest 2 required fields actually required
+                guest2Fields.forEach(fieldId => {
+                    const field = document.getElementById(fieldId);
+                    if (field) field.required = true;
+                });
             } else {
                 guest2Section.classList.add('hidden');
-                // Remove required from guest 2 fields and clear them
-                const guest2Fields = guest2Section.querySelectorAll('input, select');
-                guest2Fields.forEach(field => {
-                    field.required = false;
-                    field.value = '';
-                    clearError(field);
+                // Remove required attribute and clear values
+                guest2Fields.forEach(fieldId => {
+                    const field = document.getElementById(fieldId);
+                    if (field) {
+                        field.required = false;
+                        field.value = '';
+                    }
                 });
-            }
-        }
-       
-        // Real-time validation
-        const inputs = document.querySelectorAll('input, select');
-        inputs.forEach(input => {
-            input.addEventListener('blur', () => validateField(input));
-            input.addEventListener('input', () => clearError(input));
-        });
-       
-        function validateField(field) {
-            const fieldName = field.name;
-            const value = field.value.trim();
-            let isValid = true;
-            let errorMessage = '';
-           
-            // Skip validation if field is not required and empty
-            if (!field.required && value === '') {
-                clearError(field);
-                return true;
-            }
-           
-            // Clear previous error
-            clearError(field);
-           
-            // Required field validation
-            if (field.required && value === '') {
-                errorMessage = 'Este campo é obrigatório';
-                isValid = false;
-            }
-           
-            // Specific field validations
-            if (isValid && value !== '') {
-                if (fieldName.includes('nome') && value.length < 2) {
-                    errorMessage = 'Nome deve ter pelo menos 2 caracteres';
-                    isValid = false;
-                } else if (fieldName.includes('email') && value !== '') {
-                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                    if (!emailRegex.test(value)) {
-                        errorMessage = 'Por favor, insira um e-mail válido';
-                        isValid = false;
-                    }
-                } else if (fieldName.includes('data')) {
-                    const selectedDate = new Date(value);
-                    const today = new Date();
-                    today.setHours(0, 0, 0, 0);
-                   
-                    if (selectedDate < today) {
-                        errorMessage = 'A data deve ser hoje ou uma data futura';
-                        isValid = false;
-                    }
-                } else if (fieldName.includes('documento') && value.length < 5) {
-                    errorMessage = 'Número de documento inválido';
-                    isValid = false;
-                } else if (fieldName.includes('telefone') && value !== '') {
-                    const phoneRegex = /^[\+]?[\d\s\-\(\)]{9,}$/;
-                    if (!phoneRegex.test(value)) {
-                        errorMessage = 'Por favor, insira um telefone válido';
-                        isValid = false;
-                    }
-                }
-            }
-           
-            if (!isValid) {
-                showError(field, errorMessage);
-            }
-           
-            return isValid;
-        }
-       
-        function showError(field, message) {
-            field.classList.add('input-error');
-            const errorId = field.id + 'Error';
-            const errorDiv = document.getElementById(errorId);
-            if (errorDiv) {
-                errorDiv.textContent = message;
-                errorDiv.style.display = 'block';
-            }
-        }
-       
-        function clearError(field) {
-            field.classList.remove('input-error');
-            const errorId = field.id + 'Error';
-            const errorDiv = document.getElementById(errorId);
-            if (errorDiv) {
-                errorDiv.style.display = 'none';
+                // Also clear optional fields
+                document.getElementById('email2').value = '';
+                document.getElementById('telefone2').value = '';
             }
         }
 
-        // Form submission handling
-        document.getElementById('checkinForm').addEventListener('submit', function(e) {
-            // Validate all required fields before submission
-            let isFormValid = true;
-            const requiredFields = this.querySelectorAll('[required]');
-            
-            requiredFields.forEach(field => {
-                if (!validateField(field)) {
-                    isFormValid = false;
-                }
-            });
-            
-            if (!isFormValid) {
-                e.preventDefault();
-                alert('Por favor, corrija os erros no formulário antes de enviar.');
-                return false;
-            }
-            
-            // Show loading state
-            const submitBtn = document.getElementById('submitBtn');
-            submitBtn.innerHTML = '<span class="loading"></span>Enviando...';
-            submitBtn.disabled = true;
-        });
-        
-        // Check if we're returning from a successful form submission
+        // Show success message if redirected from success page
         window.addEventListener('load', function() {
             const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.get('success') === 'true' || window.location.hash === '#success') {
+            if (urlParams.get('success') === 'true') {
                 document.getElementById('successMessage').classList.add('show');
-                document.getElementById('checkinForm').style.display = 'none';
-                
-                // Remove the success parameter from URL after showing message
-                setTimeout(function() {
-                    const url = new URL(window.location);
-                    url.searchParams.delete('success');
-                    url.hash = '';
-                    history.replaceState('', document.title, url.pathname);
-                }, 100);
+                // Remove success parameter from URL
+                const url = new URL(window.location);
+                url.searchParams.delete('success');
+                history.replaceState('', document.title, url.pathname);
             }
         });
     </script>
