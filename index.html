@@ -234,7 +234,8 @@
                 ✓ Formulário enviado com sucesso! Entraremos em contacto em breve.
             </div>
            
-            <form name="checkin" method="POST" data-netlify="true" action="/obrigado.html">
+            <form id="checkinForm" name="checkin" method="POST" data-netlify="true" action="/obrigado.html">
+
                 <input type="hidden" name="form-name" value="checkin">
 
                 <!-- Guest Number Selection -->
@@ -403,6 +404,17 @@
                 history.replaceState('', document.title, url.pathname);
             }
         });
+
+        // 💡 NOVO CÓDIGO AQUI:
+        document.getElementById('checkinForm').addEventListener('submit', function (e) {
+            const guestCount = parseInt(document.getElementById('guestCountField').value);
+            if (guestCount === 1) {
+                const guest2Section = document.getElementById('guest2Section');
+                guest2Section.querySelectorAll('input, select').forEach(el => {
+                    el.remove(); // remove completamente os campos do segundo hóspede
+            });
+        }
+    });
     </script>
 </body>
 </html>
