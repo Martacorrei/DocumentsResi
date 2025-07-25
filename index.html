@@ -353,68 +353,55 @@
     </div>
 
     <script>
-        // Set minimum date to today
+    // Set minimum date to today
         document.getElementById('data').min = new Date().toISOString().split('T')[0];
-       
+
         function selectGuests(count) {
-            // Update hidden field
             document.getElementById('guestCountField').value = count;
-           
-            // Update button states
+
             const buttons = document.querySelectorAll('.guest-btn');
             buttons.forEach((btn, index) => {
                 btn.classList.toggle('active', index + 1 === count);
             });
-           
-            // Show/hide guest 2 section
+
             const guest2Section = document.getElementById('guest2Section');
-            const guest2Fields = ['nome2', 'documento2', 'nacionalidade2'];
-            
             if (count === 2) {
                 guest2Section.classList.remove('hidden');
-                // Make guest 2 required fields actually required
-                guest2Fields.forEach(fieldId => {
-                    const field = document.getElementById(fieldId);
-                    if (field) field.required = true;
+                guest2Section.querySelectorAll('input, select').forEach(el => {
+                    el.disabled = false;
+                    if (['nome2', 'documento2', 'nacionalidade2'].includes(el.id)) {
+                        el.required = true;
+                    }
                 });
             } else {
                 guest2Section.classList.add('hidden');
-                // Remove required attribute and clear values
-                guest2Fields.forEach(fieldId => {
-                    const field = document.getElementById(fieldId);
-                    if (field) {
-                        field.required = false;
-                        field.value = '';
-                    }
+                guest2Section.querySelectorAll('input, select').forEach(el => {
+                    el.required = false;
+                    el.disabled = true;
+                    el.value = '';
                 });
-                // Also clear optional fields
-                document.getElementById('email2').value = '';
-                document.getElementById('telefone2').value = '';
             }
         }
 
         // Show success message if redirected from success page
-        window.addEventListener('load', function() {
+        window.addEventListener('load', function () {
             const urlParams = new URLSearchParams(window.location.search);
             if (urlParams.get('success') === 'true') {
                 document.getElementById('successMessage').classList.add('show');
-                // Remove success parameter from URL
                 const url = new URL(window.location);
                 url.searchParams.delete('success');
                 history.replaceState('', document.title, url.pathname);
             }
         });
 
-        // 💡 NOVO CÓDIGO AQUI:
+        // Remove campos do hóspede 2 se desativados
         document.getElementById('checkinForm').addEventListener('submit', function (e) {
-            const guestCount = parseInt(document.getElementById('guestCountField').value);
-            if (guestCount === 1) {
-                const guest2Section = document.getElementById('guest2Section');
-                guest2Section.querySelectorAll('input, select').forEach(el => {
-                    el.remove(); // remove completamente os campos do segundo hóspede
+            const guest2Section = document.getElementById('guest2Section');
+            guest2Section.querySelectorAll('input:disabled, select:disabled').forEach(el => {
+                el.parentNode.removeChild(el);
             });
-        }
-    });
+        });
     </script>
+
 </body>
 </html>
