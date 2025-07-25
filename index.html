@@ -398,11 +398,28 @@
         });
 
         document.getElementById('checkinForm').addEventListener('submit', function (e) {
+            // 1. Mostrar no console o que está a ser enviado
             const formData = new FormData(this);
             for (let [key, value] of formData.entries()) {
                 console.log(`${key}: ${value}`);
-        }
-    });
+            }
+
+    // 2. Criar campos ocultos espelhados para garantir que o Netlify os leia
+            const fieldsToMirror = ['nome_completo', 'documento', 'nacionalidade'];
+            fieldsToMirror.forEach(name => {
+                let value = this.querySelector(`[name="${name}"]`)?.value || '';
+                let hidden = this.querySelector(`input[type="hidden"][data-mirror="${name}"]`);
+                if (!hidden) {
+                    hidden = document.createElement('input');
+                    hidden.type = 'hidden';
+                    hidden.name = name;
+                    hidden.setAttribute('data-mirror', name);
+                    this.appendChild(hidden);
+                }
+                hidden.value = value;
+            });
+        });
+
 
 
     </script>
