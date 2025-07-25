@@ -372,22 +372,17 @@
             const guest2Section = document.getElementById('guest2Section');
             if (count === 2) {
                 guest2Section.classList.remove('hidden');
-                // Restaurar os name dos campos
-                document.getElementById('nome2').setAttribute('name', 'nome_hospede_2');
-                document.getElementById('documento2').setAttribute('name', 'documento_hospede_2');
-                document.getElementById('nacionalidade2').setAttribute('name', 'nacionalidade_hospede_2');
-                document.getElementById('email2').setAttribute('name', 'email_hospede_2');
-                document.getElementById('telefone2').setAttribute('name', 'telefone_hospede_2');
             } else {
                 guest2Section.classList.add('hidden');
-                // Remover os names para que não sejam enviados
-                document.getElementById('nome2').removeAttribute('name');
-                document.getElementById('documento2').removeAttribute('name');
-                document.getElementById('nacionalidade2').removeAttribute('name');
-                document.getElementById('email2').removeAttribute('name');
-                document.getElementById('telefone2').removeAttribute('name');
+                // Limpar campos do hóspede 2 (opcional)
+                document.getElementById('nome2').value = "";
+                document.getElementById('documento2').value = "";
+                document.getElementById('nacionalidade2').value = "";
+                document.getElementById('email2').value = "";
+                document.getElementById('telefone2').value = "";
             }
         }
+
 
 
         // Show success message if redirected from success page
@@ -400,11 +395,7 @@
                 history.replaceState('', document.title, url.pathname);
             }
         });
-        document.getElementById('checkinForm').addEventListener('submit', function () {
-            document.getElementById('hidden_nome_completo').value = document.getElementById('nome').value;
-            document.getElementById('hidden_documento').value = document.getElementById('documento').value;
-            document.getElementById('hidden_nacionalidade').value = document.getElementById('nacionalidade').value;
-        });
+
         
 
 
