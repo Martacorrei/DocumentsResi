@@ -396,12 +396,7 @@
             }
         });
 
-        // Remove campos do hóspede 2 se desativados
-        document.getElementById('checkinForm').addEventListener('submit', function (e) {
-            const guest2Section = document.getElementById('guest2Section');
-            guest2Section.querySelectorAll('input:disabled, select:disabled').forEach(el => {
-                el.parentNode.removeChild(el);
-            });
+);
         });
     </script>
 
