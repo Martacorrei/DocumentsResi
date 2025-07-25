@@ -234,11 +234,8 @@
                 ✓ Formulário enviado com sucesso! Entraremos em contacto em breve.
             </div>
            
-            <form name="checkin" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+            <form name="checkin" method="POST" data-netlify="true" action="/obrigado.html">
                 <input type="hidden" name="form-name" value="checkin">
-                <p style="display: none;">
-                    <label>Don't fill this out if you're human: <input name="bot-field" /></label>
-                </p>
 
                 <!-- Guest Number Selection -->
                 <div class="guest-selector">
@@ -250,14 +247,14 @@
                 </div>
 
                 <!-- Hidden field to track number of guests -->
-                <input type="hidden" name="numero-hospedes" value="1" id="guestCountField">
+                <input type="hidden" name="numero_hospedes" value="1" id="guestCountField">
                
                 <!-- Reserva Information -->
                 <div class="guest-section">
                     <h4>Informações da Reserva</h4>
                     <div class="form-group">
-                        <label for="dataChegada" class="required">Data de Chegada</label>
-                        <input type="date" id="dataChegada" name="data-chegada" required>
+                        <label for="data" class="required">Data de Chegada</label>
+                        <input type="date" id="data" name="data_chegada" required>
                     </div>
                 </div>
                
@@ -266,23 +263,23 @@
                     <h4>Hóspede Principal</h4>
                    
                     <div class="form-group">
-                        <label for="nomeHospede1" class="required">Nome Completo</label>
-                        <input type="text" id="nomeHospede1" name="nome-hospede-1" required>
+                        <label for="nome1" class="required">Nome Completo</label>
+                        <input type="text" id="nome1" name="nome_hospede_1" required>
                     </div>
                    
                     <div class="form-group">
-                        <label for="emailHospede1" class="required">E-mail</label>
-                        <input type="email" id="emailHospede1" name="email-hospede-1" required>
+                        <label for="email1" class="required">E-mail</label>
+                        <input type="email" id="email1" name="email_hospede_1" required>
                     </div>
                    
                     <div class="form-group">
-                        <label for="documentoHospede1" class="required">Número do Cartão de Cidadão / Documento</label>
-                        <input type="text" id="documentoHospede1" name="documento-hospede-1" required placeholder="Ex: 12345678 9 ZZ0">
+                        <label for="documento1" class="required">Número do Cartão de Cidadão / Documento</label>
+                        <input type="text" id="documento1" name="documento_hospede_1" required placeholder="Ex: 12345678 9 ZZ0">
                     </div>
                    
                     <div class="form-group">
-                        <label for="nacionalidadeHospede1" class="required">Nacionalidade</label>
-                        <select id="nacionalidadeHospede1" name="nacionalidade-hospede-1" required>
+                        <label for="nacionalidade1" class="required">Nacionalidade</label>
+                        <select id="nacionalidade1" name="nacionalidade_hospede_1" required>
                             <option value="">Selecione a nacionalidade</option>
                             <option value="Portuguesa">Portuguesa</option>
                             <option value="Brasileira">Brasileira</option>
@@ -297,8 +294,8 @@
                     </div>
                    
                     <div class="form-group">
-                        <label for="telefoneHospede1" class="required">Telefone</label>
-                        <input type="tel" id="telefoneHospede1" name="telefone-hospede-1" required placeholder="+351 xxx xxx xxx">
+                        <label for="telefone1" class="required">Telefone</label>
+                        <input type="tel" id="telefone1" name="telefone_hospede_1" required placeholder="+351 xxx xxx xxx">
                     </div>
                 </div>
                
@@ -307,23 +304,23 @@
                     <h4>Segundo Hóspede</h4>
                    
                     <div class="form-group">
-                        <label for="nomeHospede2" class="required">Nome Completo</label>
-                        <input type="text" id="nomeHospede2" name="nome-hospede-2">
+                        <label for="nome2" class="required">Nome Completo</label>
+                        <input type="text" id="nome2" name="nome_hospede_2">
                     </div>
                    
                     <div class="form-group">
-                        <label for="emailHospede2">E-mail (opcional)</label>
-                        <input type="email" id="emailHospede2" name="email-hospede-2">
+                        <label for="email2">E-mail (opcional)</label>
+                        <input type="email" id="email2" name="email_hospede_2">
                     </div>
                    
                     <div class="form-group">
-                        <label for="documentoHospede2" class="required">Número do Cartão de Cidadão / Documento</label>
-                        <input type="text" id="documentoHospede2" name="documento-hospede-2" placeholder="Ex: 12345678 9 ZZ0">
+                        <label for="documento2" class="required">Número do Cartão de Cidadão / Documento</label>
+                        <input type="text" id="documento2" name="documento_hospede_2" placeholder="Ex: 12345678 9 ZZ0">
                     </div>
                    
                     <div class="form-group">
-                        <label for="nacionalidadeHospede2" class="required">Nacionalidade</label>
-                        <select id="nacionalidadeHospede2" name="nacionalidade-hospede-2">
+                        <label for="nacionalidade2" class="required">Nacionalidade</label>
+                        <select id="nacionalidade2" name="nacionalidade_hospede_2">
                             <option value="">Selecione a nacionalidade</option>
                             <option value="Portuguesa">Portuguesa</option>
                             <option value="Brasileira">Brasileira</option>
@@ -338,8 +335,8 @@
                     </div>
                    
                     <div class="form-group">
-                        <label for="telefoneHospede2">Telefone (opcional)</label>
-                        <input type="tel" id="telefoneHospede2" name="telefone-hospede-2" placeholder="+351 xxx xxx xxx">
+                        <label for="telefone2">Telefone (opcional)</label>
+                        <input type="tel" id="telefone2" name="telefone_hospede_2" placeholder="+351 xxx xxx xxx">
                     </div>
                 </div>
                
@@ -356,11 +353,9 @@
 
     <script>
         // Set minimum date to today
-        document.getElementById('dataChegada').min = new Date().toISOString().split('T')[0];
+        document.getElementById('data').min = new Date().toISOString().split('T')[0];
        
         function selectGuests(count) {
-            console.log('Selecionando', count, 'hóspedes');
-            
             // Update hidden field
             document.getElementById('guestCountField').value = count;
            
@@ -372,43 +367,30 @@
            
             // Show/hide guest 2 section
             const guest2Section = document.getElementById('guest2Section');
-            const guest2RequiredFields = ['nomeHospede2', 'documentoHospede2', 'nacionalidadeHospede2'];
-            const guest2AllFields = ['nomeHospede2', 'emailHospede2', 'documentoHospede2', 'nacionalidadeHospede2', 'telefoneHospede2'];
+            const guest2Fields = ['nome2', 'documento2', 'nacionalidade2'];
             
             if (count === 2) {
                 guest2Section.classList.remove('hidden');
                 // Make guest 2 required fields actually required
-                guest2RequiredFields.forEach(fieldId => {
+                guest2Fields.forEach(fieldId => {
                     const field = document.getElementById(fieldId);
-                    if (field) {
-                        field.required = true;
-                        console.log('Campo', fieldId, 'agora é obrigatório');
-                    }
+                    if (field) field.required = true;
                 });
             } else {
                 guest2Section.classList.add('hidden');
                 // Remove required attribute and clear values
-                guest2AllFields.forEach(fieldId => {
+                guest2Fields.forEach(fieldId => {
                     const field = document.getElementById(fieldId);
                     if (field) {
                         field.required = false;
                         field.value = '';
-                        console.log('Campo', fieldId, 'limpo e não obrigatório');
                     }
                 });
+                // Also clear optional fields
+                document.getElementById('email2').value = '';
+                document.getElementById('telefone2').value = '';
             }
         }
-
-        // Form validation before submit
-        document.querySelector('form[name="checkin"]').addEventListener('submit', function(e) {
-            console.log('Formulário sendo enviado...');
-            
-            const formData = new FormData(this);
-            console.log('Dados do formulário:');
-            for (let [key, value] of formData.entries()) {
-                console.log(key + ': ' + value);
-            }
-        });
 
         // Show success message if redirected from success page
         window.addEventListener('load', function() {
