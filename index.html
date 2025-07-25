@@ -8,26 +8,6 @@
         * {
             box-sizing: border-box;
         }
-        
-        // Form submission handling
-        document.getElementById('checkinForm').addEventListener('submit', function(e) {
-            // Let Netlify handle the form submission normally
-            // The success message will be shown by Netlify's default behavior
-            console.log('Form submitted to Netlify');
-        });
-        
-        // Check if we're returning from a successful form submission
-        window.addEventListener('load', function() {
-            if (window.location.hash === '#success') {
-                document.getElementById('successMessage').classList.add('show');
-                document.getElementById('checkinForm').style.display = 'none';
-                
-                // Remove the hash from URL after showing message
-                setTimeout(function() {
-                    history.replaceState('', document.title, window.location.pathname);
-                }, 100);
-            }
-        });
        
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -291,9 +271,7 @@
                 ✓ Formulário enviado com sucesso! Entraremos em contacto em breve.
             </div>
            
-            <form name="checkin" method="POST" data-netlify="true" id="checkinForm" data-netlify-redirect="/#success">
-              
-
+            <form name="checkin" method="POST" data-netlify="true" id="checkinForm">
                 <input type="hidden" name="form-name" value="checkin">
                 <input type="hidden" name="numero-hospedes" value="1" id="guestCountField">
 
@@ -479,36 +457,24 @@
             // Clear previous error
             clearError(field);
            
-            // Determine field type from name
-            let fieldType = '';
-            if (fieldName.includes('nome')) fieldType = 'nome';
-            else if (fieldName.includes('email')) fieldType = 'email';
-            else if (fieldName.includes('data')) fieldType = 'data';
-            else if (fieldName.includes('documento')) fieldType = 'documento';
-            else if (fieldName.includes('telefone')) fieldType = 'telefone';
+            // Required field validation
+            if (field.required && value === '') {
+                errorMessage = 'Este campo é obrigatório';
+                isValid = false;
+            }
            
-            switch(fieldType) {
-                case 'nome':
-                    if (value.length < 2) {
-                        errorMessage = 'Nome deve ter pelo menos 2 caracteres';
-                        isValid = false;
-                    } else if (!/^[a-zA-ZÀ-ÿ\s]+$/.test(value)) {
-                        errorMessage = 'Nome deve conter apenas letras';
+            // Specific field validations
+            if (isValid && value !== '') {
+                if (fieldName.includes('nome') && value.length < 2) {
+                    errorMessage = 'Nome deve ter pelo menos 2 caracteres';
+                    isValid = false;
+                } else if (fieldName.includes('email') && value !== '') {
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!emailRegex.test(value)) {
+                        errorMessage = 'Por favor, insira um e-mail válido';
                         isValid = false;
                     }
-                    break;
-                   
-                case 'email':
-                    if (value !== '') { // Only validate if not empty
-                        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                        if (!emailRegex.test(value)) {
-                            errorMessage = 'Por favor, insira um e-mail válido';
-                            isValid = false;
-                        }
-                    }
-                    break;
-                   
-                case 'data':
+                } else if (fieldName.includes('data')) {
                     const selectedDate = new Date(value);
                     const today = new Date();
                     today.setHours(0, 0, 0, 0);
@@ -517,24 +483,16 @@
                         errorMessage = 'A data deve ser hoje ou uma data futura';
                         isValid = false;
                     }
-                    break;
-                   
-                case 'documento':
-                    if (value.length < 5) {
-                        errorMessage = 'Número de documento inválido';
+                } else if (fieldName.includes('documento') && value.length < 5) {
+                    errorMessage = 'Número de documento inválido';
+                    isValid = false;
+                } else if (fieldName.includes('telefone') && value !== '') {
+                    const phoneRegex = /^[\+]?[\d\s\-\(\)]{9,}$/;
+                    if (!phoneRegex.test(value)) {
+                        errorMessage = 'Por favor, insira um telefone válido';
                         isValid = false;
                     }
-                    break;
-                   
-                case 'telefone':
-                    if (value !== '') { // Only validate if not empty
-                        const phoneRegex = /^[\+]?[\d\s\-\(\)]{9,}$/;
-                        if (!phoneRegex.test(value)) {
-                            errorMessage = 'Por favor, insira um telefone válido';
-                            isValid = false;
-                        }
-                    }
-                    break;
+                }
             }
            
             if (!isValid) {
@@ -562,6 +520,47 @@
                 errorDiv.style.display = 'none';
             }
         }
+
+        // Form submission handling
+        document.getElementById('checkinForm').addEventListener('submit', function(e) {
+            // Validate all required fields before submission
+            let isFormValid = true;
+            const requiredFields = this.querySelectorAll('[required]');
+            
+            requiredFields.forEach(field => {
+                if (!validateField(field)) {
+                    isFormValid = false;
+                }
+            });
+            
+            if (!isFormValid) {
+                e.preventDefault();
+                alert('Por favor, corrija os erros no formulário antes de enviar.');
+                return false;
+            }
+            
+            // Show loading state
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.innerHTML = '<span class="loading"></span>Enviando...';
+            submitBtn.disabled = true;
+        });
+        
+        // Check if we're returning from a successful form submission
+        window.addEventListener('load', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('success') === 'true' || window.location.hash === '#success') {
+                document.getElementById('successMessage').classList.add('show');
+                document.getElementById('checkinForm').style.display = 'none';
+                
+                // Remove the success parameter from URL after showing message
+                setTimeout(function() {
+                    const url = new URL(window.location);
+                    url.searchParams.delete('success');
+                    url.hash = '';
+                    history.replaceState('', document.title, url.pathname);
+                }, 100);
+            }
+        });
     </script>
 </body>
 </html>
