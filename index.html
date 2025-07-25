@@ -367,21 +367,23 @@
             const guest2Section = document.getElementById('guest2Section');
             if (count === 2) {
                 guest2Section.classList.remove('hidden');
-                guest2Section.querySelectorAll('input, select').forEach(el => {
-                    el.disabled = false;
-                    if (['nome2', 'documento2', 'nacionalidade2'].includes(el.id)) {
-                        el.required = true;
-                    }
-                });
+                // Restaurar os name dos campos
+                document.getElementById('nome2').setAttribute('name', 'nome_hospede_2');
+                document.getElementById('documento2').setAttribute('name', 'documento_hospede_2');
+                document.getElementById('nacionalidade2').setAttribute('name', 'nacionalidade_hospede_2');
+                document.getElementById('email2').setAttribute('name', 'email_hospede_2');
+                document.getElementById('telefone2').setAttribute('name', 'telefone_hospede_2');
             } else {
                 guest2Section.classList.add('hidden');
-                guest2Section.querySelectorAll('input, select').forEach(el => {
-                    el.required = false;
-                    el.disabled = true;
-                    el.value = '';
-                });
+                // Remover os names para que não sejam enviados
+                document.getElementById('nome2').removeAttribute('name');
+                document.getElementById('documento2').removeAttribute('name');
+                document.getElementById('nacionalidade2').removeAttribute('name');
+                document.getElementById('email2').removeAttribute('name');
+                document.getElementById('telefone2').removeAttribute('name');
             }
         }
+
 
         // Show success message if redirected from success page
         window.addEventListener('load', function () {
